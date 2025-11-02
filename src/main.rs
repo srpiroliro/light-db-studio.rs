@@ -1,8 +1,9 @@
 use std::env;
 
-use crate::sql::Reader;
+use crate::{sql::Reader, web::init};
 
 mod sql;
+mod web;
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
@@ -14,19 +15,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let reader = Reader::postgres(database_url).await.unwrap();
 
-    let schemas = reader.schemas().await.unwrap();
-    println!("{:?}", schemas);
-
-    let tables = reader.tables("public".to_string()).await.unwrap();
-    println!("{:?}", tables);
-
-    let rows = reader
-        .view("public".to_string(), "Game".to_string())
-        .await
-        .unwrap();
-    for row in rows {
-        println!("{:?}", row);
-    }
+    let _ = init(reader).await;
 
     Ok(())
 }

@@ -2,8 +2,7 @@ use futures::StreamExt;
 use std::collections::HashMap;
 
 use sqlx::{
-    AnyPool, Column, PgPool, Pool, Postgres, Row, TypeInfo, ValueRef,
-    any::{AnyPoolOptions, AnyRow},
+    Column, PgPool, Row, TypeInfo, ValueRef,
     postgres::{PgPoolOptions, PgRow},
 };
 
@@ -36,8 +35,6 @@ impl Reader {
         .fetch_all(&self.pool)
         .await?;
 
-        println!("{:?}", rows.len());
-
         let schemas = rows
             .into_iter()
             .map(|s| s.get::<String, _>("nspname"))
@@ -61,7 +58,7 @@ impl Reader {
 
     pub async fn view(
         &self,
-        schema: String, // unnecessary?
+        schema: String,
         table: String,
     ) -> Result<Vec<HashMap<String, String>>, sqlx::Error> {
         let mut result: Vec<HashMap<String, String>> = vec![];
@@ -84,8 +81,6 @@ impl Reader {
                         Err(_) => format!("<{}>", col.type_info().name()),
                     }
                 };
-
-                println!("{}--{}", name, stringified);
 
                 map.insert(name.to_string(), stringified);
             }
