@@ -4,7 +4,10 @@ A lightweight web-based database viewer inspired by Prisma ORM Studio. Built to 
 
 ## Why
 
-I wanted something similar to Prisma's ORM Studio feature - a simple way to quickly browse database tables without installing heavier programs like Beaver or similar database clients.
+I wanted something similar to Prisma's ORM Studio feature - a simple way to quickly browse database tables without installing heavier programs like DBeaver  or similar database clients.
+
+
+DBeaver is ~150MB, while lightdb is only ~4MB.
 
 ## Installation
 
